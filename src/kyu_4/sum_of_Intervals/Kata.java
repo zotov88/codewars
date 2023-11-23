@@ -1,6 +1,6 @@
-package sum_of_Intervals;
+package kyu_4.sum_of_Intervals;
 
-public class Main {
+public class Kata {
     public static void main(String[] args) {
         int[][] arr = new int[][]{
                 {0, 20},
