@@ -8,7 +8,7 @@ public class Kata {
         int[][] battleField = {
                 {1, 0, 0, 1, 1, 1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                {1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                {1, 0, 1, 0, 1, 0, 0, 0, 1, 0},
                 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 1, 0, 0, 1, 0},
                 {0, 1, 1, 0, 0, 1, 0, 0, 0, 0},
@@ -39,22 +39,21 @@ public class Kata {
         public boolean isValidate() {
             for (int i = 0; i < field.length; i++) {
                 for (int j = 0; j < field[i].length; j++) {
-                    if (field[i][j] == 1 && j + 1 < field[i].length && field[i][j + 1] == 1) {
+                    if (isHorizontalShip(i, j)) {
                         if (scanShipHorizontal(i, j) && checkBorderHorizontalShip(i, j)) {
                             fillHorizontalShipByZero(i, j);
                         } else {
                             return false;
                         }
                     }
-                    if (field[i][j] == 1 && i + 1 < field.length && field[i + 1][j] == 1) {
+                    if (isVerticalShip(i, j)) {
                         if (scanShipVertical(i, j) && checkBorderVerticalShip(i, j)) {
                             fillVerticalShipByZero(i, j);
                         } else {
                             return false;
                         }
                     }
-                    if (field[i][j] == 1) {
-                        lastShipDeck = 1;
+                    if (isOneDeckShip(i, j)) {
                         if (checkBorderOneDeckShip(i, j)) {
                             field[i][j] = 0;
                         } else {
@@ -66,7 +65,20 @@ public class Kata {
                 }
             }
 
+            System.out.println(shipMap);
             return isValidateCountOfShip();
+        }
+
+        private boolean isOneDeckShip(int i, int j) {
+            return field[i][j] == 1;
+        }
+
+        private boolean isVerticalShip(int i, int j) {
+            return field[i][j] == 1 && i + 1 < field.length && field[i + 1][j] == 1;
+        }
+
+        private boolean isHorizontalShip(int i, int j) {
+            return field[i][j] == 1 && j + 1 < field[i].length && field[i][j + 1] == 1;
         }
 
         private boolean checkBorderVerticalShip(int i, int j) {
@@ -90,6 +102,7 @@ public class Kata {
         }
 
         private boolean checkBorderOneDeckShip(int i, int j) {
+            lastShipDeck = 1;
             int upVertical = i == 0 ? i : i - 1;
             int downVertical = i == field.length - 1 ? i : i + 1;
             int leftHorizontal = j == 0 ? j : j - 1;
@@ -168,6 +181,4 @@ public class Kata {
             }
         }
     }
-
-
 }
