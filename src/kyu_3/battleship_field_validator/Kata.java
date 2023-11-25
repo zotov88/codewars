@@ -31,7 +31,6 @@ public class Kata {
         private final Map<Integer, Integer> shipMap = new HashMap<>();
         private int lastShipDeck;
 
-
         public BattleFieldValidator(int[][] field) {
             this.field = field;
         }
